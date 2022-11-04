@@ -1,37 +1,8 @@
-import { fetchNewsList, 
-         fetchJobsList, 
-         fetchAskList, 
-         fetchUserInfo,
-         fetchItemInfo } from '../api/index'
+import { fetchUserInfo,
+         fetchItemInfo,
+         fetchList } from '../api/index'
 
 export default {
-    fetchNews({ commit }) {
-      fetchNewsList()
-        .then(({ data }) => {
-          commit('setNews', data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    fetchJobs({ commit }) {
-      fetchJobsList()
-        .then(({ data }) => {
-          commit('setJobs', data)
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    },
-    fetchAsk({ commit }) {
-      fetchAskList()
-        .then(({ data }) => {
-          commit('setAsk', data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
     fetchUser({ commit }, payload) {
       fetchUserInfo(payload)
         .then(({data}) => {
@@ -49,5 +20,10 @@ export default {
         .catch(error => {
           console.log(error)
         }) 
+    },
+    FETCH_LIST({commit}, pageName){
+      fetchList(pageName)
+        .then(({data}) => commit('setList', data))
+        .catch(error => console.log(error))
     }
   }

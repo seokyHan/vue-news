@@ -13,5 +13,8 @@ export default {
   },
   setItem(state, payload) {
     state.item = payload
+  },
+  setList(state, payload) {
+    state.list = payload
   }
 }
