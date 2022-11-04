@@ -1,0 +1,95 @@
+<template>
+  <div>
+    <ul class="item-list">
+      <li v-for="(item, index) in listItems" :key="index" class="post">
+        <div class="points">
+          {{ item.points || '-' }}
+        </div>
+        <div>
+          <p class="item-title">
+            <template v-if="item.domain">
+              <a :href="item.url">
+                {{ item.title }}
+              </a>
+            </template>
+            <template v-else>
+              <router-link :to="`item/${item.id}`">
+                {{ item.title }}
+              </router-link>
+            </template>
+          </p>
+
+          <small class="link-text">
+            {{ item.time_ago }} by
+            <router-link 
+              v-if="item.user"
+              class="link-text" :to="`/user/${item.user}`">
+              {{  item.user }}
+            </router-link>
+            <a :href="item.url" v-else>
+              {{ item.domain }}
+            </a>
+          </small>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
+    listItems() {
+      const name = this.$route.name
+
+      if(name === 'news') {
+        return this.$store.state.news
+      } else if(name === 'ask') {
+        return this.$store.state.ask
+      } else if(name === 'jobs') {
+        return this.$store.state.jobs
+      }
+    }
+  },
+  created() {
+    // this.$store.dispatch('fetchNews')
+    const name = this.$route.name
+    if(name === 'news') {
+      this.$store.dispatch('fetchNews')
+    } else if(name === 'ask') {
+      this.$store.dispatch('fetchAsk')
+    } else if(name === 'jobs') {
+      this.$store.dispatch('fetchJobs')
+    }
+  }
+
+}
+</script>
+
+<style scoped>
+.item-list {
+  margin: 0;
+  padding: 0;
+}
+.post {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+.points {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  height: 60px;
+  justify-content: center;
+  color: #42b883;
+}
+.item-title {
+  margin: 0;
+}
+.link-text {
+ color: #828282;
+}
+</style>
