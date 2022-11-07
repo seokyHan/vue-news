@@ -3,30 +3,19 @@ import { fetchUserInfo,
          fetchList } from '../api/index'
 
 export default {
-    fetchUser({ commit }, payload) {
-      return fetchUserInfo(payload)
-        .then(({data}) => {
-          commit('setUser', data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    async fetchUser({ commit }, payload) {
+      const response = await fetchUserInfo(payload)
+      commit('setUser', response.data)
+      return response
     },
-    fetchItem({ commit }, payload) {
-      return fetchItemInfo(payload)
-        .then(({data}) => {
-          commit('setItem', data)
-        })
-        .catch(error => {
-          console.log(error) 
-        }) 
+    async fetchItem({ commit }, payload) {
+      const response = await fetchItemInfo(payload)
+      commit('setItem', response.data)
+      return response
     },
-    FETCH_LIST({commit}, pageName){
-      return fetchList(pageName)
-        .then(response => {
-          commit('setList', response.data)
-          return response
-        })
-        .catch(error => console.log(error))
+    async FETCH_LIST({commit}, pageName){
+      const response = await fetchList(pageName)
+      commit('setList', response.data)
+      return response
     }
   }
