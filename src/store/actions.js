@@ -18,7 +18,7 @@ export default {
           commit('setItem', data)
         })
         .catch(error => {
-          console.log(error)
+          console.log(error) 
         }) 
     },
     FETCH_LIST({commit}, pageName){
